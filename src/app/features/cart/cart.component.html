@@ -1,0 +1,79 @@
+<section class="py-16 bg-gray-100">
+  <div class="container xl:w-[95%]">
+    <div class="parent grid sm:grid-cols-12 gap-10">
+      <div class="sm:col-span-12 md:col-span-8 bg-gray-200 rounded p-4 shadow">
+        <div class="flex felx-wrap justify-between mb-4">
+          @if (cartItems().products) {
+            <h2 class="mb-2 text-xl">Cart: {{ cartItems().products.length }} Items</h2>
+            <button
+              [disabled]="!cartItems().products.length"
+              (click)="clearCart()"
+              class="btn-main"
+            >
+              Clear Cart
+            </button>
+          }
+        </div>
+
+        @for (item of cartItems().products; track item.product._id) {
+          <div class="row grid sm:grid-cols-12 bg-gray-100 mb-4 rounded p-3 shadow">
+            <div class="col-span-1 flex flex-wrap items-center">
+              <div>
+                <img class="w-full" [src]="item.product.imageCover" [alt]="item.product.title" />
+              </div>
+            </div>
+            <div class="col-span-11 flex flex-wrap justify-between items-center p-4">
+              <div>
+                <h3 class="mb-2">{{ item.product.title }}</h3>
+                <div class="flex flex-wrap gap-2 items-center">
+                  <div class="bg-gray-200 rounded border px-2 py-1 space-x-3">
+                    <button
+                      class="cursor-pointer"
+                      (click)="updateCartProduct(item.product.id, item.count - 1)"
+                    >
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <span>{{ item.count }}</span>
+                    <button
+                      class="cursor-pointer"
+                      (click)="updateCartProduct(item.product.id, item.count + 1)"
+                    >
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                  <button class="cursor-pointer" (click)="deleteFromCart(item.product.id)">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </div>
+              </div>
+              <span>{{ item.count * item.price }} EGP</span>
+            </div>
+          </div>
+        } @empty {
+          <div class="w-1/4 mx-auto">
+            <img class="w-full" src="/assets/images/empty-cart.png" alt="" />
+            <p class="text-2xl mt-3">Your cart is empty</p>
+          </div>
+        }
+      </div>
+      <div class="sm:col-span-12 md:col-span-4">
+        <div class="bg-gray-200 rounded shadow p-4">
+          <h2 class="text-xl">Order Summary</h2>
+          <div class="flex justify-between my-4">
+            <span class="text-lg">price</span>
+            <span class="text-lg">{{ cartItems().totalCartPrice }} EGP</span>
+          </div>
+          @if (cartItems().products) {
+            <button
+              class="btn-main w-full"
+              [routerLink]="['/checkout', cartItems()._id]"
+              [disabled]="!cartItems().products.length"
+            >
+              Proceed To Checkout
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

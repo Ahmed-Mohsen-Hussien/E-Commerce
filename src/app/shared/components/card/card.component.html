@@ -1,0 +1,27 @@
+<div class="card group/parent overflow-hidden">
+  <div class="cursor-pointer" [routerLink]="['/details', data.slug, data._id]">
+    <div>
+      <img class="w-full" [src]="data.imageCover" [alt]="data.title" [title]="data.title" />
+    </div>
+    <div>
+      <h3 class="text-sm mt-2 text-green-600">{{ data.category.name }}</h3>
+      <h4 class="text-lg pb-3">{{ data.title | split: 2 }}</h4>
+      <div class="flex flex-wrap justify-between items-center pb-2">
+        <span>{{ data.price | currency: 'GBP' }}</span>
+        <span> <i class="fas fa-star text-yellow-500"></i>{{ data.ratingsAverage }}</span>
+      </div>
+    </div>
+  </div>
+  <button
+    (click)="addProdcutItemToCart(data.id)"
+    class="btn-main w-full translate-y-[250%] group-hover/parent:translate-y-0 transition-[translate] duration-500"
+  >
+    Add To Cart
+  </button>
+  <button
+    (click)="addProductToWishlist(data.id)"
+    class="btn-main w-full translate-y-[120%] group-hover/parent:translate-y-1 transition-[translate] duration-500"
+  >
+    Add To Wishlist
+  </button>
+</div>

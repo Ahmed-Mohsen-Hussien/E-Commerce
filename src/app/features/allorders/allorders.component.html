@@ -1,0 +1,56 @@
+<section class="py-16">
+  <div class="container xl:w-[95%]">
+    @for (item of ordersList(); track item._id) {
+      <div class="bg-gray-200 px-4 py-2 mb-10 rounded shadow">
+        <div class="flex flex-wrap justify-between mt-2">
+          <h2 class="text-lg">Date Of Order : {{ item.createdAt | date: 'MMMM d, y, h:mm a' }}</h2>
+          <div class="flex flex-wrap gap-x-3">
+            @if (item.paymentMethodType === 'card') {
+              <span class="bg-green-600 px-2 py-1 text-white rounded shadow">Paid with visa</span>
+            } @else {
+              <span class="bg-green-600 px-2 py-1 text-white rounded shadow">Cash on delivery</span>
+            }
+            <span class="text-lg">Total Price : {{ item.totalOrderPrice }} EGP</span>
+          </div>
+        </div>
+        @for (orderProduct of item.cartItems; track orderProduct._id) {
+          <div class="row grid sm:grid-cols-12 bg-gray-100 rounded p-3 shadow my-4">
+            <div class="col-span-1 flex flex-wrap items-center">
+              <div>
+                <img
+                  class="w-full"
+                  [src]="orderProduct.product.imageCover"
+                  [alt]="orderProduct.product.title"
+                />
+              </div>
+            </div>
+            <div class="col-span-11 flex flex-wrap justify-between items-center p-4">
+              <div class="flex flex-col">
+                <span class="text-green-600">{{ orderProduct.product.category.name }}</span>
+                <span class="bg-gray-400 text-white rounded-xs text-sm px-1 py-0.5 w-fit">{{
+                  orderProduct.product.brand.name
+                }}</span>
+                <h2 class="text-lg my-2">{{ orderProduct.product.title }}</h2>
+                <span class="text-md">Count : {{ orderProduct.count }}</span>
+              </div>
+              <div class="flex flex-col gap-y-3">
+                <span class="text-lg">{{ orderProduct.count * orderProduct.price }} EGP</span>
+                <span>
+                  rating : {{ orderProduct.product.ratingsAverage }}
+                  <span><i class="fas fa-star text-yellow-500"></i></span>
+                </span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @empty {
+      <div class="flex flex-col justify-center items-center">
+        <div></div>
+        <div>
+          <h2 class="text-2xl">No orders yet</h2>
+        </div>
+      </div>
+    }
+  </div>
+</section>

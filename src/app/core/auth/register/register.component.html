@@ -1,0 +1,173 @@
+<section class="border border-gray-200 shadow-xs rounded bg-gray-200 md:w-1/2 mx-auto mt-16 p-4">
+  <div>
+    <h2 class="mb-3 text-green-600 font-medium text-3xl text-center">Register Now</h2>
+  </div>
+  <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
+    @let nameControl = registerForm.get('name');
+    <div class="mb-3">
+      <label for="name" class="main-label ms-1">Name</label>
+      <input
+        formControlName="name"
+        type="text"
+        id="name"
+        class="main-input"
+        placeholder="Enter your name"
+      />
+      @if (nameControl?.errors && nameControl?.touched) {
+        <div
+          class="flex p-2 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+          role="alert"
+        >
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="my-2 list-disc list-outside space-y-1 ps-5">
+              @if (nameControl?.getError('required')) {
+                <li>Name is required</li>
+              } @else if (nameControl?.getError('minlength')) {
+                <li>Name must be at least 3 characters</li>
+              } @else if (nameControl?.getError('maxlength')) {
+                <li>Name must be at most 20 characters</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+    @let emailControl = registerForm.get('email');
+    <div class="mb-3">
+      <label for="email" class="main-label ms-1">Email Address</label>
+      <input
+        formControlName="email"
+        type="email"
+        id="email"
+        class="main-input"
+        placeholder="Enter your email address"
+      />
+      @if (emailControl?.errors && emailControl?.touched) {
+        <div
+          class="flex p-2 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+          role="alert"
+        >
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="my-2 list-disc list-outside space-y-1 ps-5">
+              @if (emailControl?.getError('required')) {
+                <li>Email address is required</li>
+              } @else if (emailControl?.getError('email')) {
+                <li>Please enter a valid email address</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+    @let passwordControl = registerForm.get('password');
+    <div class="mb-3 relative">
+      <label for="password" class="main-label ms-1">Password</label>
+      <input
+        formControlName="password"
+        [type]="showPass ? 'text' : 'password'"
+        id="password"
+        class="main-input"
+        placeholder="Enter your password"
+      />
+      <span class="absolute top-0 right-3 translate-y-[150%] cursor-pointer">
+        <i
+          (click)="togglePassword()"
+          [class]="showPass ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"
+        ></i>
+      </span>
+
+      @if (passwordControl?.errors && passwordControl?.touched) {
+        <div
+          class="flex p-2 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+          role="alert"
+        >
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="my-2 list-disc list-outside space-y-1 ps-5">
+              @if (passwordControl?.getError('required')) {
+                <li>Password is required</li>
+              } @else if (passwordControl?.getError('pattern')) {
+                <span class="font-medium">Password must meet these requirements :</span>
+                <li class="mt-2">
+                  Minimum eight characters, at least one upper case English letter, one lower case
+                  English letter, one number and one special character
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+    @let rePasswordControl = registerForm.get('rePassword');
+    <div class="mb-3">
+      <label for="repassword" class="main-label ms-1">Confirm Password</label>
+      <input
+        formControlName="rePassword"
+        type="password"
+        id="repassword"
+        class="main-input"
+        placeholder="Rewrite your password"
+      />
+      @if (
+        (rePasswordControl?.errors || registerForm.getError('mismatch')) &&
+        rePasswordControl?.touched
+      ) {
+        <div
+          class="flex p-2 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+          role="alert"
+        >
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="my-2 list-disc list-outside space-y-1 ps-5">
+              @if (rePasswordControl?.getError('required')) {
+                <li>Password confirmation is required</li>
+              } @else if (registerForm.getError('mismatch')) {
+                <li>Confirm password doesn't match the password</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+    @let phoneControl = registerForm.get('phone');
+    <div class="mb-3">
+      <label for="email" class="main-label ms-1">Phone Number</label>
+      <input
+        formControlName="phone"
+        type="tel"
+        id="phone"
+        class="main-input"
+        placeholder="Enter your phone number"
+      />
+      @if (phoneControl?.errors && phoneControl?.touched) {
+        <div
+          class="flex p-2 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+          role="alert"
+        >
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="my-2 list-disc list-outside space-y-1 ps-5">
+              @if (phoneControl?.getError('required')) {
+                <li>Phone number is required</li>
+              } @else if (phoneControl?.getError('pattern')) {
+                <li>Please enter a valid phone number</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+    <div class="flex flex-wrap justify-end">
+      <button type="submit" class="btn-main px-3">
+        Register
+        @if (isLoading()) {
+          <span>
+            <i class="fa-solid fa-spinner animate-spin"></i>
+          </span>
+        }
+      </button>
+    </div>
+  </form>
+</section>

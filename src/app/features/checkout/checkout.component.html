@@ -1,0 +1,107 @@
+<section class="border border-gray-200 shadow-xs rounded bg-gray-200 md:w-1/2 mx-auto my-16 p-4">
+  <div>
+    <h2 class="mb-3 text-green-600 font-medium text-3xl text-center">Check Out</h2>
+  </div>
+  <form [formGroup]="checkOutForm" (ngSubmit)="onSubmitCheckOutForm($event)">
+    <div formGroupName="shippingAddress">
+      @let detailsControl = checkOutForm.get('shippingAddress.details');
+      <div class="mb-3">
+        <label for="details" class="main-label ms-1">Shipping Details</label>
+        <textarea
+          formControlName="details"
+          name="details"
+          id="details"
+          placeholder="Enter your address details"
+          class="main-input"
+        ></textarea>
+        @if (detailsControl?.errors && detailsControl?.touched) {
+          <div
+            class="flex p-2 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul class="my-2 list-disc list-outside space-y-1 ps-5">
+                @if (detailsControl?.getError('required')) {
+                  <li>Details is required</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+      @let phoneControl = checkOutForm.get('shippingAddress.phone');
+      <div class="mb-3">
+        <label for="phone" class="main-label ms-1">Phone Number</label>
+        <input
+          formControlName="phone"
+          type="tel"
+          id="phone"
+          class="main-input"
+          placeholder="Enter your phone number"
+        />
+        @if (phoneControl?.errors && phoneControl?.touched) {
+          <div
+            class="flex p-2 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul class="my-2 list-disc list-outside space-y-1 ps-5">
+                @if (phoneControl?.getError('required')) {
+                  <li>Phone number is required</li>
+                } @else if (phoneControl?.getError('pattern')) {
+                  <li>Please enter an egyptian phone number</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+      @let cityControl = checkOutForm.get('shippingAddress.city');
+      <div class="mb-3">
+        <label for="city" class="main-label ms-1">City</label>
+        <input
+          formControlName="city"
+          type="text"
+          id="city"
+          class="main-input"
+          placeholder="Enter your city"
+        />
+        @if (cityControl?.errors && cityControl?.touched) {
+          <div
+            class="flex p-2 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul class="my-2 list-disc list-outside space-y-1 ps-5">
+                @if (cityControl?.getError('required')) {
+                  <li>City is required</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+      <div class="flex justify-between mt-5">
+        <button id="visa" type="submit" class="btn-main px-3 w-[49%]">
+          Pay With Visa
+          @if (isLoading() && buttonId === 'visa') {
+            <span>
+              <i class="fa-solid fa-spinner animate-spin"></i>
+            </span>
+          }
+        </button>
+        <button id="cash" type="submit" class="btn-main px-3 w-[49%]">
+          Cash On Delivery
+          @if (isLoading() && buttonId === 'cash') {
+            <span>
+              <i class="fa-solid fa-spinner animate-spin"></i>
+            </span>
+          }
+        </button>
+      </div>
+    </div>
+  </form>
+</section>

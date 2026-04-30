@@ -1,0 +1,59 @@
+<section class="py-16 bg-gray-100">
+  <div class="container xl:w-[95%]">
+    <div class="bg-gray-200 rounded shadow p-4">
+      @for (item of wishlistProducts(); track item._id) {
+        <div class="row grid grid-cols-12 bg-gray-100 rounded shadow my-5 p-4 gap-x-5">
+          <div class="col-span-4 sm:col-span-2 md:col-span-3 lg:col-span-1">
+            <img class="w-full" [src]="item.imageCover" alt="" />
+          </div>
+          <div
+            class="col-span-8 sm:col-span-10 md:col-span-9 lg:col-span-11 flex flex-col justify-center"
+          >
+            <div class="flex flex-wrap justify-between items-center">
+              <div class="flex flex-col gap-y-1">
+                <h3 class="text-green-600">{{ item.category.name }}</h3>
+                <span class="bg-gray-400 text-white rounded-xs text-sm px-1 py-0.5 w-fit">{{
+                  item.brand.name
+                }}</span>
+                <h2 class="text-lg">{{ item.title }}</h2>
+                <span
+                  >ratings : {{ item.ratingsAverage }} <i class="fas fa-star text-yellow-500"></i>
+                </span>
+              </div>
+              <div class="flex flex-wrap flex-col justify-center items-end">
+                <div class="flex flex-wrap gap-x-2">
+                  <span>Added on {{ item.updatedAt | date: 'shortDate' }}</span>
+                  <button class="rm-btn" (click)="removeProductFromWishlist(item._id)">
+                    Remove
+                  </button>
+                </div>
+                <div class="flex flex-wrap gap-x-2 items-center py-4">
+                  @if (item.priceAfterDiscount) {
+                    <span class="bg-green-600/70 rounded-xs px-2 py-1 text-white text-2xl">
+                      -
+                      {{
+                        ((item.price - item.priceAfterDiscount) / item.price) * 100
+                          | number: '1.0-0'
+                      }}
+                      %
+                    </span>
+                    <div class="flex flex-col justify-center items-start">
+                      <span class="text-sm text-gray-400 line-through">{{ item.price }} EGP</span>
+                      <span class="text-lg">{{ item.priceAfterDiscount }} EGP</span>
+                    </div>
+                  } @else {
+                    <span class="text-lg">{{ item.price }} EGP</span>
+                  }
+
+                  <button class="btn-main" (click)="addProdcutItemToCart(item._id)">
+                    Add To Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

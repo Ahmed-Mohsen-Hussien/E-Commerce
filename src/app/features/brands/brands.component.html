@@ -1,0 +1,13 @@
+<section class="py-16 bg-gray-100">
+  <div class="container xl:w-[95%]">
+    <h2 class="text-2xl text-green-600 font-medium mb-6 text-center">Shop ALL Brands</h2>
+    <div class="row grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+      @for (item of brandList(); track item._id) {
+        <div>
+          <img class="w-full" [src]="item.image" [alt]="item.name" [title]="item.name" />
+          <h3 class="text-green-600 pt-1">{{ item.name }}</h3>
+        </div>
+      }
+    </div>
+  </div>
+</section>
