@@ -12,16 +12,18 @@
       </div>
     </div>
   </div>
-  <button
-    (click)="addProdcutItemToCart(data.id)"
-    class="btn-main w-full translate-y-[250%] group-hover/parent:translate-y-0 transition-[translate] duration-500"
-  >
-    Add To Cart
-  </button>
-  <button
-    (click)="addProductToWishlist(data.id)"
-    class="btn-main w-full translate-y-[120%] group-hover/parent:translate-y-1 transition-[translate] duration-500"
-  >
-    Add To Wishlist
-  </button>
+  <div>
+    <button
+      (click)="addProdcutItemToCart(data.id)"
+      class="btn-main w-full mb-2 lg:mb-0 lg:translate-y-[250%] lg:group-hover/parent:translate-y-0 transition-[translate] duration-500"
+    >
+      Add To Cart
+    </button>
+    <button
+      (click)="addProductToWishlist(data.id)"
+      class="btn-main w-full lg:translate-y-[120%] lg:group-hover/parent:translate-y-1 transition-[translate] duration-500"
+    >
+      Add To Wishlist
+    </button>
+  </div>
 </div>
